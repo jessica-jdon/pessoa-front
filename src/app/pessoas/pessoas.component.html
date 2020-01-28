@@ -1,0 +1,57 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">CRUD Pessoa</li>
+    </ol>
+  </nav>
+  <div class="container">
+    <div class="card list-pessoa">
+      <h5 class="card-header">Lista de pessoas</h5>
+      <div class="card-body">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">CPF</th>
+                <th scope="col">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of pessoas">
+                <td>{{p.id}}</td>
+                <td>{{p.nome}}</td>
+                <td>{{p.cpf}}</td>
+                <td>
+                  <button type="button" class="btn btn-warning btn-sm" (click)="editaPessoa(p)">Editar</button>
+                  <button type="button" class="btn btn-danger btn-sm ml-1" (click)="excluirPessoa(p)">Excluir</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  
+    <div class="card add-pessoa">
+        <h5 class="card-header">Adicionar/Atualizar pessoa</h5>
+        <div class="card-body">
+            <form id="add-form" (ngSubmit)="f.form.valid && salvarPessoa(f)" #f="ngForm" novalidate>
+              <div class="form-group">
+                  <label for="nome">Nome</label>
+                  <input type="text" [(ngModel)]="pessoa.nome" id="nome" name="nome" #nome="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && nome.invalid }" placeholder="Digite o nome">
+                  <div *ngIf="f.submitted && nome.invalid" class="invalid-feedback">
+                      <div *ngIf="nome.errors.required">Nome é obrigatório</div>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="cpf">CPF</label>
+                  <input type="text" [(ngModel)]="pessoa.cpf" id="cpf" name="cpf" #cpf="ngModel" required class="form-control" [ngClass]="{ 'is-invalid': f.submitted && cpf.invalid }" placeholder="Digite o CPF">
+                  <div *ngIf="f.submitted && cpf.invalid" class="invalid-feedback">
+                      <div *ngIf="cpf.errors.required">CPF é obrigatória</div>
+                  </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-add-pessoa">Salvar</button>
+              <button type="reset" class="btn btn-secondary btn-add-pessoa" (click)="limparForm(f)">Cancelar</button>
+            </form>
+        </div>
+      </div>
+  </div>
